@@ -31,7 +31,7 @@ void api::Account::cancel_order(const std::string &order_id)
     res = curl_easy_perform(curl);
     if (res != CURLE_OK)
     {
-        // TODO: Error
+        std::cout << "ERROR: curl easy perform failed on cancel_order\n";
     }
     curl_slist_free_all(headers);
     curl_easy_reset(curl);
@@ -60,9 +60,13 @@ void api::Account::get_order(const std::string &order_id)
     res = curl_easy_perform(curl);
     if (res != CURLE_OK)
     {
-        // TODO: Error
+        std::cout << "ERROR: curl easy perform failed on get_order\n";
     }
-    // TODO: output order
+    else
+    {
+        // TODO: display order/parse json
+    }
+    
     curl_slist_free_all(headers);
     curl_easy_reset(curl);
     
@@ -91,7 +95,7 @@ void api::Account::get_orders_by_path()
     res = curl_easy_perform(curl);
     if (res != CURLE_OK)
     {
-        // TODO: Error
+        std::cout << "ERROR: curl request failed on get_orders_by_path\n";
     }
 
     // TODO: output orders
