@@ -14,12 +14,21 @@ namespace api
             ~Quote();
             
             void display();
-            
+
+        
         private:
-            std::string quote_type;
-            
             rapidjson::Document quote_doc;
-            void set_variables();
+
+            std::vector<struct Mutual_Fund> mutual_fund_quotes;
+            std::vector<struct Future> future_quotes;
+            std::vector<struct Future_Options> future_option_quotes;
+            std::vector<struct Index> index_quotes;
+            std::vector<struct Option> option_quotes;
+            std::vector<struct Forex> forex_quotes;
+            std::vector<struct ETF> etf_quotes;
+            std::vector<struct Equity> equity_quotes;
+
+
             
             struct Mutual_Fund
             {    

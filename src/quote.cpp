@@ -11,8 +11,17 @@ api::Quote::Quote(const std::string &buffer_input)
         {
             const rapidjson::Value &symbol = quote_doc[symbol_itr->name.GetString()];
             rapidjson::Value::ConstMemberIterator &data_itr = symbol.FindMember("description");
-            quote_type = data_itr->name.GetString();
+            std::string quote_type = data_itr->name.GetString();
             
+            if (quote_type == "mutualFund")
+            {
+                // TODO:
+            }
+            if (quote_type == "future")
+            {
+                // TODO:
+            }
+            // TODO:
         }
     
 }   // constructor
@@ -25,11 +34,4 @@ api::Quote::~Quote()
 void api::Quote::display()
 {
     // TODO: display quote depending on type
-    // TODO: if multiple of different types exist, display seperately
-}
-
-// -- Private functions --
-void api::Quote::set_variables()
-{
-    
 }
