@@ -18,17 +18,6 @@ namespace api
         
         private:
             rapidjson::Document quote_doc;
-
-            std::vector<struct Mutual_Fund> mutual_fund_quotes;
-            std::vector<struct Future> future_quotes;
-            std::vector<struct Future_Options> future_option_quotes;
-            std::vector<struct Index> index_quotes;
-            std::vector<struct Option> option_quotes;
-            std::vector<struct Forex> forex_quotes;
-            std::vector<struct ETF> etf_quotes;
-            std::vector<struct Equity> equity_quotes;
-
-
             
             struct Mutual_Fund
             {    
@@ -297,5 +286,14 @@ namespace api
                 double reg_market_net_change;
                 int reg_market_trade_time;
             };   //struct Equity
+
+            std::vector<struct Mutual_Fund> mutual_fund_quotes;
+            std::vector<struct Future> future_quotes;
+            std::vector<struct Future_Options> future_option_quotes;
+            std::vector<struct Index> index_quotes;
+            std::vector<struct Option> option_quotes;
+            std::vector<struct Forex> forex_quotes;
+            std::vector<struct ETF> etf_quotes;
+            std::vector<struct Equity> equity_quotes;
     };  // class quote
 }   // namespace api
