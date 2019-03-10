@@ -5,6 +5,9 @@
 
 api::Account::Account()
 {
+    // add in login credentials for the user for using the application
+    std::cout << "Account number:";
+    std::cout << "OAuth user ID:";
     curl = curl_easy_init();
 };
 

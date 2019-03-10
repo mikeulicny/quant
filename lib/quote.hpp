@@ -14,7 +14,9 @@ namespace api
             ~Quote();
             
             void display();
-
+            /*
+            TODO: This all needs to be re-written to better suit access of the quote data
+            */
         
         private:
             rapidjson::Document quote_doc;
@@ -74,7 +76,7 @@ namespace api
                 std::string expiration_date;
             };   // struct Future
 
-            struct Future_Options
+            struct Future_Option
             {
                 std::string symbol;
                 double bid_price;
@@ -289,7 +291,7 @@ namespace api
 
             std::vector<struct Mutual_Fund> mutual_fund_quotes;
             std::vector<struct Future> future_quotes;
-            std::vector<struct Future_Options> future_option_quotes;
+            std::vector<struct Future_Option> future_option_quotes;
             std::vector<struct Index> index_quotes;
             std::vector<struct Option> option_quotes;
             std::vector<struct Forex> forex_quotes;
