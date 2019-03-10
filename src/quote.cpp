@@ -19,10 +19,9 @@ api::Quote::Quote(const std::string &buffer_input)
         symbol_iter != quote_doc.MemberEnd(); ++symbol_iter)
         {
             const rapidjson::Value &symbol = quote_doc[symbol_iter->name.GetString()];
-            // asset type is returned to identify which type of 
-            rapidjson::Value::ConstMemberIterator &data_iter = symbol.FindMember("assetType");
+            // asset type is returned to identify which type of asset is quoted
+            rapidjson::Value::ConstMemberIterator data_iter = symbol.FindMember("assetType");
             std::string asset_type = data_iter->value.GetString();
-            
 
             if (asset_type == "MUTUAL_FUND")
             {   // populate all mutual fund struct variables
