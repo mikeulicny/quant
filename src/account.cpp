@@ -14,6 +14,9 @@ api::Account::Account()
     std::cout << "OAuth user ID (case sensitive):";
     std::cin >> OAuth_user_id;
     curl = curl_easy_init();
+
+    Account::authentication();  // call auth function upon account login
+    // TODO: re-call auth function before each access token expiry
 };
 
 api::Account::~Account()
@@ -24,8 +27,6 @@ api::Account::~Account()
 // --Public Functions--
 void api::Account::cancel_order(const std::string &order_id)
 {
-    authentication();
-
     struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, auth_header.c_str());
     
@@ -49,8 +50,6 @@ void api::Account::cancel_order(const std::string &order_id)
 
 void api::Account::get_order(const std::string &order_id)
 {
-    authentication();
-
     struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, auth_header.c_str());
 
@@ -83,8 +82,6 @@ void api::Account::get_order(const std::string &order_id)
 
 void api::Account::get_orders_by_path()
 {
-    authentication();
-
     struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, auth_header.c_str());
 
@@ -116,8 +113,6 @@ void api::Account::get_orders_by_path()
 
 void api::Account::get_orders_by_query()
 {
-    authentication();
-
     struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, auth_header.c_str());
 
@@ -143,8 +138,6 @@ void api::Account::get_orders_by_query()
 
 void api::Account::place_order()
 {
-    authentication();
-
     struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, auth_header.c_str());
     headers = curl_slist_append(headers, "Content-Type: application/json");
@@ -182,8 +175,6 @@ void api::Account::place_order()
 
 void api::Account::replace_order()
 {
-    authentication();
-
     struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, auth_header.c_str());
     headers = curl_slist_append(headers, "Content-Type: application/json");
@@ -209,8 +200,6 @@ void api::Account::replace_order()
 
 void api::Account::create_saved_order()
 {
-    authentication();
-
     // TODO: create order
     std::string post_data;  // post data will be sent as a json string
 
@@ -241,8 +230,6 @@ void api::Account::create_saved_order()
 
 void api::Account::delete_saved_order(const std::string &order_id)
 {
-    authentication();
-
     struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, auth_header.c_str());
 
@@ -268,8 +255,6 @@ void api::Account::delete_saved_order(const std::string &order_id)
 
 void api::Account::get_saved_order(const std::string &order_id)
 {
-    authentication();
-
     struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, auth_header.c_str());
 
@@ -304,8 +289,6 @@ TODO: may implement in future
 
 void api::Account::get_quotes(const std::string &symbol)
 {
-    authentication();
-
     struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, auth_header.c_str());
     
@@ -327,8 +310,9 @@ void api::Account::get_quotes(const std::string &symbol)
     else
     {
         // TODO: json parse output
-        //  make quote object
+        //  make quote object 
         //  display quote
+        // SEE quote.hpp and quote.cpp files
     } 
     read_buffer.clear();
     curl_slist_free_all(headers);
@@ -341,70 +325,59 @@ void api::Account::authentication()
 {   
     /*
     authentication function
-        checks if the auth or refresh token have expired
-        if (true)
-            create new POST request
-            get new access/refresh token
-            parse from json into variable
-            set new auth header
-        reset curl handle
+        checks if the refresh token has expired. If one has expired it creates a new POST request
+        obtaining the new auth/refresh token in json format. Json response is parsed and auth/refresh
+        token are saved in memory. New authorization header is created
     */
+
     std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-    auto auth_time_elapsed = std::chrono::duration_cast<std::chrono::seconds>(access_token_expiry-now);
     auto refresh_time_elapsed = std::chrono::duration_cast<std::chrono::hours>(refresh_token_expiry-now);
+ 
+    std::string post_data = "access_type="; // no refresh_token
+    access_token_expiry = std::chrono::steady_clock::now();
 
-    if (auth_time_elapsed >= std::chrono::seconds(1770))    // 29mins30secs
+    if (refresh_time_elapsed >= std::chrono::hours(2136))   // 89 days
     {   
-        std::string post_data = "access_type="; // no refresh_token
-        access_token_expiry = std::chrono::steady_clock::now();
-
-        if (refresh_time_elapsed >= std::chrono::hours(2136))   // 89 days
-        {   
-            post_data += "offline";  // new refresh_token
-            refresh_token_expiry = std::chrono::steady_clock::now();
-        }
-
-        post_data += "&grant_type=refresh_token&code=&redirect_uri=&client_id=";
-        post_data += url::urlEncode(OAuth_user_id);
-        post_data += "&refresh_token=";
-        post_data += url::urlEncode(refresh_token);
-
-        struct curl_slist *headers = NULL;
-        headers = curl_slist_append(headers, "Content-Type: application/x-www-form-urlencoded");
-
-        // set data for post
-        curl_easy_setopt(curl, CURLOPT_URL, "https://api.tdameritrade.com/v1/oauth2/token");
-        curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1L);
-        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, post_data.c_str());
-        curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, (long)std::strlen(post_data.c_str()));
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &read_buffer);
-        curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
-
-        res = curl_easy_perform(curl);
-
-        if (res != CURLE_OK)
-        {
-            std::cout << "Error: Authorization POST request failed\n";
-        }
-        else
-        {
-            rapidjson::Document document;
-            document.Parse(read_buffer.c_str());
-            access_token = document["access_token"].GetString();
-            auth_header = "Authorization: Bearer ";
-            auth_header.append(access_token);
-
-            if (document.HasMember("refresh_token"))
-            {
-                refresh_token = document["refresh_token"].GetString();
-            }
-        }
-
-        read_buffer.clear();
-        curl_slist_free_all(headers);
+        post_data += "offline";  // new refresh_token
+        refresh_token_expiry = std::chrono::steady_clock::now();
     }
+
+    post_data += "&grant_type=refresh_token&code=&redirect_uri=&client_id=";
+    post_data += url::urlEncode(OAuth_user_id);
+    post_data += "&refresh_token=";
+    post_data += url::urlEncode(refresh_token);
+    struct curl_slist *headers = NULL;
+    headers = curl_slist_append(headers, "Content-Type: application/x-www-form-urlencoded");
+    // set data for post
+    curl_easy_setopt(curl, CURLOPT_URL, "https://api.tdameritrade.com/v1/oauth2/token");
+    curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1L);
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, post_data.c_str());
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, (long)std::strlen(post_data.c_str()));
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &read_buffer);
+    curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
+    res = curl_easy_perform(curl);
+    if (res != CURLE_OK)
+    {
+        std::cout << "Error: Authorization POST request failed\n";
+    }
+    else
+    {
+        rapidjson::Document document;
+        document.Parse(read_buffer.c_str());
+        access_token = document["access_token"].GetString();
+        auth_header = "Authorization: Bearer ";
+        auth_header.append(access_token);
+        if (document.HasMember("refresh_token"))
+        {
+            refresh_token = document["refresh_token"].GetString();
+        }
+    }
+
+    read_buffer.clear();
+    curl_slist_free_all(headers);
+    
     
     curl_easy_reset(curl);
 
