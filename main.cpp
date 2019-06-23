@@ -11,11 +11,17 @@ int main(void)
 {	
 	std::string USER_INPUT;
 	curl_global_init(CURL_GLOBAL_DEFAULT);
-	std::cout << "Algo Trader Version 1.0" << std::endl;
+	std::cout << "Algo Trader Version 1.0.0" << std::endl;
 	
 	// TEST
+	// create account object
 	api::Account user;
+	// call function on account
 	user.get_quotes("NVDA");
+
+
+
+	// wait for button press
 	std::cin.get();
 
 	curl_global_cleanup();
