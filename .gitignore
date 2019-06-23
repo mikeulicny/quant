@@ -2,7 +2,7 @@
 .curl_request_codes
 
 # ignore vscode settings folder
-.vscode
+.vscode/
 
 # ignore text files of tokens
 tokens.txt
