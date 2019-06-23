@@ -1,8 +1,8 @@
 # ignore auto-generated cURL examples
 .curl_request_codes
 
-# ignore vscode settings folder
-.vscode/
+# ignore vscode cache folder
+.vscode/ipch/
 
 # ignore text files of tokens
 tokens.txt
