@@ -6,8 +6,13 @@
 api::Account::Account()
 {
     // add in login credentials for the user for using the application
+    // TODO: this is a temporary solution for linking to tdameritrades website.
+    //  This should eventually be put into a username & password using a database
+    //  to link the account number and OAuth user ID
     std::cout << "Account number:";
-    std::cout << "OAuth user ID:";
+    std::cin >> account_number;
+    std::cout << "OAuth user ID (case sensitive):";
+    std::cin >> OAuth_user_id;
     curl = curl_easy_init();
 };
 

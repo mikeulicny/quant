@@ -1,4 +1,11 @@
+# ignore auto-generated cURL examples
 .curl_request_codes
+
+# ignore vscode settings folder
 .vscode
+
+# ignore text files of tokens
 tokens.txt
+
+# ignore text files of data types
 quote_response_types.txt

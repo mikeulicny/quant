@@ -47,7 +47,7 @@ namespace api
 
         private:
             // account variables
-            const std::string account_number = "869715446";
+            std::string account_number;
             std::string OAuth_user_id;
             std::string access_token;   //1083 chars
             std::string refresh_token;  //935 chars

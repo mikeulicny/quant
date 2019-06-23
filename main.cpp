@@ -13,8 +13,9 @@ int main(void)
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 	std::cout << "Algo Trader Version 1.0" << std::endl;
 	
+	// TEST
 	api::Account user;
-	user.getQuotes("NVDA");
+	user.get_quotes("NVDA");
 	std::cin.get();
 
 	curl_global_cleanup();
