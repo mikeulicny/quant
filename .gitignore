@@ -6,6 +6,3 @@
 
 # ignore text files of tokens
 tokens.txt
-
-# ignore text files of data types
-quote_response_types.txt
