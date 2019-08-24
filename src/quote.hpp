@@ -287,6 +287,11 @@ namespace api
                 int reg_market_last_size;
                 double reg_market_net_change;
                 int reg_market_trade_time;
+                double net_percent_change;
+                double mark_change;
+                double mark_percent_change;
+                double reg_market_percent_change;
+                bool delayed;
             };   //struct Equity
 
             std::vector<struct Mutual_Fund> mutual_fund_quotes;

@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/usr/include/curl",
-                "/usr/include/rapidjson"
+                "/usr/include/rapidjson",
+                "/usr/include/readline"
             ],
             "defines": [],
             "compilerPath": "/opt/cuda/bin/gcc",
