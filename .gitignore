@@ -4,5 +4,5 @@
 # ignore vscode cache folder
 .vscode/ipch/
 
-# ignore text files of tokens
-tokens.txt
+# ignore token file
+tokens.json
