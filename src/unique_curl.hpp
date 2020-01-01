@@ -21,6 +21,6 @@ class unique_curl
         CURL *curl;
         CURLcode res;
 
-}; // class unique_curl
+}; // unique_curl class
 
-} // namespace tmda
+} // tmda namespace

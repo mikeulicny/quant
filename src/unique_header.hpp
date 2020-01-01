@@ -18,6 +18,7 @@ class unique_header
 
     private:
         struct curl_slist *slist = NULL;
-}; // class unique_header
 
-} // namespace tdma
+}; // unique_header class
+
+} // tdma namespace
