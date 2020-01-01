@@ -2,6 +2,9 @@
 
 #include <curl/curl.h>
 
+namespace tmda 
+{
+
 class unique_curl
 {
     public:
@@ -18,4 +21,6 @@ class unique_curl
         CURL *curl;
         CURLcode res;
 
-};
+}; // class unique_curl
+
+} // namespace tmda

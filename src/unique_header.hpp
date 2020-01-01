@@ -4,6 +4,9 @@
 #include <cstring>
 #include <curl/curl.h>
 
+namespace tdma
+{
+
 class unique_header
 {
     public:
@@ -15,4 +18,6 @@ class unique_header
 
     private:
         struct curl_slist *slist = NULL;
-};
+}; // class unique_header
+
+} // namespace tdma
