@@ -1,5 +1,3 @@
-#pragma once
-
 #include "quote.hpp"
 
 api::Quote::Quote(const std::string &buffer_input)
