@@ -2,7 +2,7 @@
 
 #include <curl/curl.h>
 
-namespace tmda 
+namespace tdma 
 {
 
 class unique_curl
@@ -20,6 +20,8 @@ class unique_curl
     private:
         CURL *curl;
         CURLcode res;
+        
+        size_t write_callback(void *contents, size_t size, size_t nmemb, void *userp);
 
 }; // unique_curl class
 

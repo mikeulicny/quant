@@ -24,3 +24,10 @@ void tdma::unique_curl::perform()
 {
     res = curl_easy_perform(curl)
 }
+
+size_t tdma::unique_curl::write_callback(void *contents, size_t size, size_t nmemb, void *userp)
+{
+    ((std::string*)userp)->append((char*)contents, size * nmemb);
+    return size * nmemb;
+}
+
