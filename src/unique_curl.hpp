@@ -11,6 +11,9 @@ class unique_curl
         unique_curl();
         ~unique_curl();
         
+        unique_curl(const unique_curl&) = delete;
+        unique_curl &operator=(const unique_curl&) = delete;
+
         template<typename T>
         void setopt(const CURLoption &option, const T &parameter);
 
