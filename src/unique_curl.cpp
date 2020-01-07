@@ -18,11 +18,13 @@ void tdma::unique_curl::setopt(const CURLoption &option, const T &parameter)
 
 void tdma::unique_curl::reset()
 {
+    write_buffer.clear();
     curl_easy_reset(curl);
 }
 
 void tdma::unique_curl::perform()
 {
+    write_buffer.clear();
     curl_easy_setopt(curl, CULROPT_WRITEFUNCTION, write_callback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &write_buffer);
 
