@@ -2,7 +2,11 @@
 
 #include <string>
 #include <curl/curl.h>
+#include <rapidjson/document.h>
 #include <fmt/format.h>
+
+#include "unique_curl.hpp"
+
 
 namespace tdma
 {
@@ -26,6 +30,8 @@ class auth
         std::string m_client_id;
         std::string m_access_token;
         std::string m_refresh_token;
+
+        unique_curl curl_handle;
 
 };// auth class
 
