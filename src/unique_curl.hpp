@@ -22,6 +22,7 @@ class unique_curl
         
         const CURLcode &result() const {return res;}
         const std::string &data() const {return write_buffer;}
+
     private:
         CURL *curl;
         CURLcode res;
