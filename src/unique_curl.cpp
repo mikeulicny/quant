@@ -25,6 +25,9 @@ void tdma::unique_curl::reset()
 void tdma::unique_curl::perform()
 {
     write_buffer.clear();
+
+    // default curl settings
+    curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1L);
     curl_easy_setopt(curl, CULROPT_WRITEFUNCTION, write_callback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &write_buffer);
 
