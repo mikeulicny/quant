@@ -10,12 +10,6 @@ tdma::unique_curl::~unique_curl()
     curl_easy_cleanup(curl);
 }
 
-template <typename T>
-void tdma::unique_curl::setopt(const CURLoption &option, const T &parameter)
-{
-    curl_easy_setopt(curl, option, parameter);
-}
-
 void tdma::unique_curl::reset()
 {
     write_buffer.clear();
@@ -28,7 +22,7 @@ void tdma::unique_curl::perform()
 
     // default curl settings
     curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1L);
-    curl_easy_setopt(curl, CULROPT_WRITEFUNCTION, write_callback);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &write_buffer);
 
     res = curl_easy_perform(curl);
