@@ -1,11 +1,17 @@
 #pragma once
 
+// debugging
+#include <iostream>
+
 #include <chrono>
 #include <string>
 #include <curl/curl.h>
-#include <json.hpp>
+#include <nlohmann/json.hpp>
+#include <iomanip>
+#include <fstream>
 #include <fmt/format.h>
 
+#include "http_util.hpp"
 #include "unique_curl.hpp"
 
 
@@ -18,8 +24,8 @@ class auth
         auth();
         ~auth();
         
-        void post();
-        void write_to_file();
+        void post(const bool &get_refresh = false);
+        void write_to_file(const std::string &file_name = "credentials.json");
         const bool is_expired();
         
         const std::string &client_id() const {return m_client_id;}

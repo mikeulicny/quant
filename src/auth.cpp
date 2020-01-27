@@ -2,15 +2,22 @@
 
 tdma::auth::auth()
 {
-    std::ifstream file("credentials.json");
-    json temp_json;
-    file >> temp_json;
+    long long integral_access_timepoint;
+    long long integral_refresh_timepoint;
 
-    client_id = temp_json["client_id"].get<std::string>();
+    std::ifstream file("src/credentials.json");
+    nlohmann::json temp_json;
+    file >> temp_json;
+    m_client_id = temp_json["client_id"].get<std::string>();
     m_access_token = temp_json["access_token"].get<std::string>();
     m_refresh_token = temp_json["refresh_token"].get<std::string>();
-    access_expires_at = temp_json["access_expires_at"].get<std::chrono::steady_clock::time_point>();
-    refresh_expires_at = temp_json["refresh_expires_at"].get<std::chrono::steady_clock::time_point>();
+    integral_access_timepoint = temp_json["access_expires_at"].get<long long>();
+    integral_refresh_timepoint = temp_json["refresh_expires_at"].get<long long>();
+
+    // TODO: convert integral to time points
+    //std::chrono::steady_clock::time_point temp_tp{std::steady_clock::duration{integral_access_timepoint}};
+    access_expires_at = std::chrono::seconds(integral_access_timepoint);
+    //refresh_expires_at = std::chrono::steady_clock::duration{integral_refresh_timepoint};
 }
 
 tdma::auth::~auth()
@@ -20,6 +27,18 @@ tdma::auth::~auth()
 
 void tdma::auth::post(const bool &get_refresh)
 {
+    // TODO: make post data its own class and create better formatting
+    std::string post_data = "access_type=";
+    if (get_refresh)
+    {
+        post_data += "offline";
+    }
+    post_data += "&grant_type=refresh_token";
+    post_data += "&code=&redirect_uri=&client_id=";
+    post_data += m_client_id;
+    post_data += "&refresh_token=";
+    post_data += m_refresh_token;
+
     // request new codes
     curl_handle.setopt(CURLOPT_URL, "https://api.tdameritrade.com/v1/oauth2/token");
     curl_handle.setopt(CURLOPT_POSTFIELDS, post_data.c_str());
@@ -27,39 +46,48 @@ void tdma::auth::post(const bool &get_refresh)
     curl_handle.setopt(CURLOPT_CUSTOMREQUEST, "POST");
 
     curl_handle.perform();
-    
-    if (curl_handle.result() != CURLE_OK)
-    {
-        return;
-    }
+   
+    nlohmann::json temp_json;
+    temp_json = nlohmann::json::parse(curl_handle.data());
+   
+    std::cout << "recieved data from curl_handle:\n";
+    std::cout << std::setw(4) << temp_json << "\n\n";
 
-    temp_json = json::parse(curl_handle.data());
-    
-    client_id = temp_json["client_id"].get<std::string>();
     m_access_token = temp_json["access_token"].get<std::string>();
     access_expires_at = std::chrono::steady_clock::now() + std::chrono::minutes(29);
 
     if (get_refresh)
     {
-        m_refresh_token = temp_json["refresh_token"].get<std::string>();
+        m_refresh_token = http_util::url_encode(temp_json["refresh_token"].get<std::string>());
         refresh_expires_at = std::chrono::steady_clock::now() + std::chrono::hours(2159);
     }
+
+    // TODO: add in support for reading "scope", "token_type", and expiry times from
+    // tdma json response
     
 }
 
-void tdma::auth::write_to_file()
+void tdma::auth::write_to_file(const std::string &file_name)
 {
-    std::ofstream file("credentials.json");
-    json temp_json;
+    // convert time points to integrals
+    long long integral_access_timepoint = access_expires_at.time_since_epoch().count();
+    long long integral_refresh_timepoint = refresh_expires_at.time_since_epoch().count();
+
+    // populate file
+    std::ofstream file(file_name);
+    nlohmann::json temp_json;
     temp_json["client_id"] = m_client_id;
     temp_json["access_token"] = m_access_token;
     temp_json["refresh_token"] = m_refresh_token;
-    temp_json["access_expires_at"] = access_expires_at;
-    temp_json["refresh_expires_at"] = refresh_expires_at;
-    file << temp_json << std::endl;
+    temp_json["access_expires_at"] = integral_access_timepoint;
+    temp_json["refresh_expires_at"] = integral_refresh_timepoint;
+    file << std::setw(4) << temp_json << std::endl;
 }
 
-const bool tmda::auth::is_expired()
+const bool tdma::auth::is_expired()
 {
-    
+    if (access_expires_at < std::chrono::steady_clock::now())
+        return true;
+    else
+        return false;
 }
