@@ -25,7 +25,7 @@ class auth
         ~auth();
         
         void post(const bool &get_refresh = false);
-        void write_to_file(const std::string &file_name = "credentials.json");
+        void write_to_file(const std::string &file_name = "src/credentials.json");
         const bool is_expired();
         
         const std::string &client_id() const {return m_client_id;}
@@ -37,8 +37,12 @@ class auth
         std::string m_client_id;
         std::string m_access_token;
         std::string m_refresh_token;
-        std::chrono::steady_clock::time_point access_expires_at;
-        std::chrono::steady_clock::time_point refresh_expires_at;
+
+        // steady clock is used to ensure DST does not create unwanted effects
+        // access token expires 30 mins after request
+        // refresh token expires 90 days after request
+        std::chrono::time_point<std::chrono::steady_clock, std::chrono::seconds> access_expires_at;
+        std::chrono::time_point<std::chrono::steady_clock, std::chrono::seconds> refresh_expires_at;
 
         unique_curl curl_handle;
 
