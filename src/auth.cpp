@@ -51,9 +51,6 @@ void tdma::auth::post(const bool &get_refresh)
     nlohmann::json temp_json;
     temp_json = nlohmann::json::parse(curl_handle.data());
    
-    std::cout << "recieved data from curl_handle:\n";
-    std::cout << std::setw(4) << temp_json << "\n\n";
-
     // TODO: create time class to handle verbose chrono library
     m_access_token = temp_json["access_token"].get<std::string>();
     access_expires_at = std::chrono::time_point_cast<std::chrono::seconds>(std::chrono::steady_clock::now() + std::chrono::seconds(1800));
