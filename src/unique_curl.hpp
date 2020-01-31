@@ -11,7 +11,8 @@ class unique_curl
     public:
         unique_curl();
         ~unique_curl();
-        
+       
+        // raii class requirements
         unique_curl(const unique_curl&) = delete;
         unique_curl &operator=(const unique_curl&) = delete;
 
@@ -22,11 +23,11 @@ class unique_curl
         }
 
         void reset();
+        
         void perform();
         
-        
-        const CURLcode &result() const {return res;}
-        const std::string &data() const {return write_buffer;}
+        const CURLcode &result() const { return res; }
+        const std::string &data() const { return write_buffer; }
     
     private:
         CURL *curl;
