@@ -8,9 +8,8 @@
 #include <fstream>
 #include <fmt/format.h>
 
-#include "http_util.hpp"
 #include "unique_curl.hpp"
-
+#include "http_util.hpp"
 
 namespace tdma
 {

@@ -12,7 +12,7 @@ tdma::auth::~auth()
 
 void tdma::auth::post(const bool &get_refresh)
 {
-    // TODO: make post data its own class and create better formatting
+   
     std::string post_data = "access_type=";
     if (get_refresh)
     {
@@ -31,7 +31,7 @@ void tdma::auth::post(const bool &get_refresh)
     curl_handle.setopt(CURLOPT_CUSTOMREQUEST, "POST");
 
     curl_handle.perform();
-   
+  
     nlohmann::json temp_json;
     temp_json = nlohmann::json::parse(curl_handle.data());
    
