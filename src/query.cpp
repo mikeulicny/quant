@@ -1,4 +1,4 @@
-#include "query.hpp"
+#include "../include/query.hpp"
 
 tdma::query::query()
 {
