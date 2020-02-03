@@ -1,10 +1,10 @@
 #pragma once
 
-#include <iostream>
 #include <string>
 #include <nlohmann/json.hpp>
 
 #include "unique_curl.hpp"
+#include "unique_slist.hpp"
 #include "auth.hpp"
 #include "query.hpp"
 
@@ -29,7 +29,7 @@ class account
         bool m_orders;
 
         std::string m_data;
-
+        unique_slist m_headers;
         unique_curl curl_handle;
 
 }; // account class
