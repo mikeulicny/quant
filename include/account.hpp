@@ -17,8 +17,10 @@ class account
         account(auth &auth_ref, const std::string &account_id, bool positions, bool orders);
         ~account();
 
+        // sends a curl request to retreive account details
         void get();
 
+        // returns the account details as a string
         const std::string &data() const { return m_data; }
 
     private:
@@ -29,7 +31,6 @@ class account
         bool m_orders;
 
         std::string m_data;
-        unique_slist m_headers;
         unique_curl curl_handle;
 
 }; // account class
