@@ -14,7 +14,7 @@ namespace tdma
 class account
 {
     public:
-        account(auth &auth_ref, const std::string &account_id, bool positions, bool orders);
+        account(auth &auth_ref, const std::string &account_id, const bool positions, const bool orders);
         ~account();
 
         // sends a curl request to retreive account details
@@ -24,12 +24,12 @@ class account
         const std::string &data() const { return m_data; }
 
     private:
-        auth *p_auth;
         std::string m_account_id;
         query m_account_fields;
         bool m_positions;
         bool m_orders;
 
+        auth *p_auth;
         std::string m_data;
         unique_curl curl_handle;
 

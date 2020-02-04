@@ -1,6 +1,6 @@
 #include "../include/account.hpp"
 
-tdma::account::account(auth &auth_ref, const std::string &account_id, bool positions, bool orders) : 
+tdma::account::account(auth &auth_ref, const std::string &account_id, const bool positions, const bool orders) : 
     p_auth(&auth_ref),
     m_account_id(account_id),
     m_positions(positions),
@@ -23,9 +23,12 @@ void tdma::account::get()
 {
     std::string url = "https://api.tdameritrade.com/v1/accounts/";
     url += m_account_id;
-    unique_slist headers;
+    if (positions || orders)
+        url += "?" + m_account_fields.data();
 
     p_auth->check();
+
+    unique_slist headers;
     headers.append(p_auth->auth_header());
 
     curl_handle.setopt(CURLOPT_URL, url.c_str());
