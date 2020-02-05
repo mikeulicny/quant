@@ -6,7 +6,7 @@
 // TODO: re-format file to follow consistent syntax
 
 
-namespace http_util
+namespace util 
 {
 
 inline unsigned char to_hex(unsigned char x)

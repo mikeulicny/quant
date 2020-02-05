@@ -41,7 +41,7 @@ void tdma::auth::post(const bool &get_refresh)
 
     if (get_refresh)
     {
-        m_refresh_token = http_util::url_encode(temp_json["refresh_token"].get<std::string>());
+        m_refresh_token = util::url_encode(temp_json["refresh_token"].get<std::string>());
         refresh_expires_at = std::chrono::time_point_cast<std::chrono::seconds>(std::chrono::system_clock::now() + std::chrono::hours(2160));
 
     // TODO: add in support for reading "scope", "token_type", and expiry times from
