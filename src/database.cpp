@@ -4,9 +4,6 @@ tdma::database::database(const std::string &conninfo)
 {
     m_conn = PQconnectdb(conninfo.c_str());
     m_res = nullptr;
-
-    m_port = PQport(m_conn);
-    m_options = PQoptions(m_conn);
 }
 
 tdma::database::~database()

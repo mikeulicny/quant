@@ -20,11 +20,11 @@ class database
 
         const std::string name();
         const std::string user();
-        const std::string &password() const { return m_password; }
-        const std::string &host() const { return m_host; }
-        const std::string &host_addr() const { return m_host_address; }
-        const std::string &port() const { return m_port; }
-        const std::string &options() const { return m_options; }
+        const std::string password();
+        const std::string host(); 
+        const std::string host_addr();
+        const std::string port();
+        const std::string options();
         
         // TODO: add member functions for status data
     private:
