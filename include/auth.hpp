@@ -6,7 +6,6 @@
 #include <nlohmann/json.hpp>
 #include <iomanip>
 #include <fstream>
-#include <fmt/format.h>
 
 #include "unique_curl.hpp"
 #include "util.hpp"
