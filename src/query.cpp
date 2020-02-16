@@ -13,6 +13,11 @@ void tdma::query::append(const std::string &key, const std::string &value)
     m_data.emplace_back(key, value);
 }
 
+void tdma::query::clear()
+{
+    m_data.clear(); 
+}
+
 const std::string tdma::query::data()
 {
     std::string temp_str;

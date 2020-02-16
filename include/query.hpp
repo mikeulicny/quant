@@ -13,7 +13,10 @@ class query
         query();
         ~query();
 
+        // TODO: change to template function to allow every type of data
         void append(const std::string &key, const std::string &value);
+
+        void clear();
 
         const std::string data();
 
