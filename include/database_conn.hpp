@@ -6,18 +6,18 @@
 namespace tdma
 {
 
-class database
+class database_conn
 {
     public:
-        database(const std::string &conninfo);
-        ~database();
+        database_conn(const std::string &conninfo);
+        ~database_conn();
 
         // raii class requirements
-        database(const database&) = delete;
-        database&operator=(const database&) = delete;
+        database_conn(const database_conn&) = delete;
+        database_conn&operator=(const database_conn&) = delete;
 
         void exec(const std::string &query);
-
+        
         const std::string name();
         const std::string user();
         const std::string password();
@@ -26,14 +26,9 @@ class database
         const std::string port();
         const std::string options();
         
-        // TODO: add member functions for status data
     private:
         PGconn *m_conn;
-        PGresult *m_res;
         
-        // make seperate class for database requests?
-        // PGresult *m_res;
-        
-};// database class
+};// database_conn class
 
 } // tdma namespace
