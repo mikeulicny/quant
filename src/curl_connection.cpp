@@ -1,7 +1,7 @@
 #include "../include/curl_connection.hpp"
 
 
-curl_connection::curl_init curl_connection::curl_environment;
+tdma::curl_connection::curl_init tdma::curl_connection::curl_environment;
 
 tdma::curl_connection::curl_connection() : curl_handle(curl_easy_init())
 {
@@ -28,7 +28,7 @@ void tdma::curl_connection::perform()
     curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, &write_buffer);
 
     CURLcode result = curl_easy_perform(curl_handle);
-    if (result != CURL_OK)
+    if (result != CURLE_OK)
     { 
         // TODO: error handling
     }
