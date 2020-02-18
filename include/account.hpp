@@ -3,7 +3,7 @@
 #include <string>
 #include <nlohmann/json.hpp>
 
-#include "unique_curl.hpp"
+#include "curl_connection.hpp"
 #include "unique_slist.hpp"
 #include "auth.hpp"
 #include "query.hpp"

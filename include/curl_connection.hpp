@@ -28,8 +28,6 @@ class curl_connection
         
         void perform();
         
-        const CURLcode &result() const { return res; }
-
         const std::string &data() const { return write_buffer; }
     
     private:
@@ -41,7 +39,6 @@ class curl_connection
         }curl_environment;
 
         CURL *curl_handle;
-        CURLcode res;
         std::string write_buffer;
         static size_t write_callback(void *contents, size_t size, size_t nmemb, void *userp);
 

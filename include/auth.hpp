@@ -7,7 +7,7 @@
 #include <iomanip>
 #include <fstream>
 
-#include "unique_curl.hpp"
+#include "curl_connection.hpp"
 #include "util.hpp"
 
 namespace tdma
