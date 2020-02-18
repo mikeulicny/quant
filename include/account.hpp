@@ -11,7 +11,7 @@
 namespace tdma
 {
 
-class account
+class account : private unique_curl
 {
     public:
         account(auth &auth_ref, const std::string &account_id, const bool positions, const bool orders);
@@ -31,7 +31,6 @@ class account
 
         auth *p_auth;
         std::string m_data;
-        unique_curl curl_handle;
 
 }; // account class
 

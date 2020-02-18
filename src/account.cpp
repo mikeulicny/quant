@@ -23,7 +23,7 @@ void tdma::account::get()
 {
     std::string url = "https://api.tdameritrade.com/v1/accounts/";
     url += m_account_id;
-    if (positions || orders)
+    if (m_positions || m_orders)
         url += "?" + m_account_fields.data();
 
     p_auth->check();
@@ -31,13 +31,13 @@ void tdma::account::get()
     unique_slist headers;
     headers.append(p_auth->auth_header());
 
-    curl_handle.setopt(CURLOPT_URL, url.c_str());
-    curl_handle.setopt(CURLOPT_HTTPHEADER, headers.list()); 
-    curl_handle.setopt(CURLOPT_CUSTOMREQUEST, "GET");
+    unique_curl::setopt(CURLOPT_URL, url.c_str());
+    unique_curl::setopt(CURLOPT_HTTPHEADER, headers.list()); 
+    unique_curl::setopt(CURLOPT_CUSTOMREQUEST, "GET");
 
-    curl_handle.perform();
+    unique_curl::perform();
 
-    m_data = curl_handle.data();
+    m_data = unique_curl::data();
 }
 
 

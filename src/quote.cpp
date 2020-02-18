@@ -23,13 +23,13 @@ void tdma::quote::get()
     p_auth->check();
     headers.append(p_auth->auth_header());
 
-    curl_handle.setopt(CURLOPT_URL, url.c_str());
-    curl_handle.setopt(CURLOPT_HTTPHEADER, headers.list());
-    curl_handle.setopt(CURLOPT_CUSTOMREQUEST, "GET");
+    curl_connection::setopt(CURLOPT_URL, url.c_str());
+    curl_connection::setopt(CURLOPT_HTTPHEADER, headers.list());
+    curl_connection::setopt(CURLOPT_CUSTOMREQUEST, "GET");
 
-    curl_handle.perform();
+    curl_connection::perform();
 
-    m_data = curl_handle.data();
+    m_data = curl_connection::data();
 };
 
 void tdma::quote::add_symbol(const std::string &symbol)

@@ -4,12 +4,13 @@
 #include <vector>
 #include <initializer_list>
 #include "auth.hpp"
+#include "curl_connection.hpp"
 #include "unique_slist.hpp"
 
 namespace tdma
 {
 
-class quote
+class quote : private  curl_connection
 {
     public:
         quote(auth &auth_ref);
@@ -32,7 +33,6 @@ class quote
         
         auth *p_auth;
         std::string m_data;
-        unique_curl curl_handle;
 };// quote class
 
 } // tdma namespace

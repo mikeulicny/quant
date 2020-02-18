@@ -13,7 +13,7 @@
 namespace tdma
 {
 
-class auth
+class auth : private curl_connection
 {
     public:
         auth();
@@ -44,8 +44,6 @@ class auth
 
         std::chrono::time_point<std::chrono::system_clock, std::chrono::seconds> access_expires_at;
         std::chrono::time_point<std::chrono::system_clock, std::chrono::seconds> refresh_expires_at;
-
-        unique_curl curl_handle;
 
 };// auth class
 

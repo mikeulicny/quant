@@ -25,12 +25,12 @@ void tdma::auth::post(const bool &get_refresh)
     post_data += m_refresh_token;
 
     // request new codes
-    curl_handle.setopt(CURLOPT_URL, "https://api.tdameritrade.com/v1/oauth2/token");
-    curl_handle.setopt(CURLOPT_POSTFIELDS, post_data.c_str());
-    curl_handle.setopt(CURLOPT_POSTFIELDSIZE, (long)std::strlen(post_data.c_str()));
-    curl_handle.setopt(CURLOPT_CUSTOMREQUEST, "POST");
+    curl_connection::setopt(CURLOPT_URL, "https://api.tdameritrade.com/v1/oauth2/token");
+    curl_connection::setopt(CURLOPT_POSTFIELDS, post_data.c_str());
+    curl_connection::setopt(CURLOPT_POSTFIELDSIZE, (long)std::strlen(post_data.c_str()));
+    curl_connection::setopt(CURLOPT_CUSTOMREQUEST, "POST");
 
-    curl_handle.perform();
+    curl_connection::perform();
   
     nlohmann::json temp_json;
     temp_json = nlohmann::json::parse(curl_handle.data());
