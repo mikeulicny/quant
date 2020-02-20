@@ -26,8 +26,6 @@ void tdma::account::get()
     if (m_positions || m_orders)
         url += "?" + m_account_fields.data();
 
-    p_auth->check();
-
     unique_slist headers;
     headers.append(p_auth->auth_header());
 

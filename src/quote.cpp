@@ -19,8 +19,6 @@ void tdma::quote::get()
     }
 
     unique_slist headers;
-
-    p_auth->check();
     headers.append(p_auth->auth_header());
 
     curl_connection::setopt(CURLOPT_URL, url.c_str());
