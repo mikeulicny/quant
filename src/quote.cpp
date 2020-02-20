@@ -8,7 +8,7 @@ tdma::quote::~quote()
 {
 }
 
-void tdma::quote::get()
+const nlohmann::json tdma::quote::get()
 {
     std::string url = "https://api.tdameritrade.com/v1/marketdata/quotes";
     url += "?symbol=";
@@ -27,7 +27,7 @@ void tdma::quote::get()
 
     curl_connection::perform();
 
-    m_data = curl_connection::data();
+    nlohmann::json m_data = nlohmann::json::parse(curl_connection::data());
 };
 
 void tdma::quote::add_symbol(const std::string &symbol)

@@ -17,7 +17,7 @@ class quote : private  curl_connection
         ~quote();
 
         // sends a curl request to retreive quotes for each symbol
-        void get();
+        const nlohmann::json get();
 
         // adds a symbol to the list of symbols
         void add_symbol(const std::string &symbol);
@@ -32,7 +32,6 @@ class quote : private  curl_connection
         std::vector<std::string> m_symbols;
         
         auth *p_auth;
-        std::string m_data;
 };// quote class
 
 } // tdma namespace
