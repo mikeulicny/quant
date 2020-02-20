@@ -1,17 +1,19 @@
 #include "../include/database_conn.hpp"
 
-tdma::database_conn::database_conn(const std::string &conninfo)
+tdma::database_conn::database_conn(const std::string &conninfo) : m_result(nullptr)
 {
     m_conn = PQconnectdb(conninfo.c_str());
 }
 
 tdma::database_conn::~database_conn()
 {
+    PQclear(m_result);
     PQfinish(m_conn);
 }
 
 void tdma::database_conn::exec(const std::string &query)
 {
+    PQclear(m_result);
     PQexec(m_conn, query.c_str());
 }
 

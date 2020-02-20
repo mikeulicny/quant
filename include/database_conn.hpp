@@ -28,6 +28,7 @@ class database_conn
         
     private:
         PGconn *m_conn;
+        PGresult *m_result;
         
 };// database_conn class
 
