@@ -6,7 +6,7 @@
 - nlohmann/json: json library for handling the json data returned from the cURL requests
     <https://github.com/nlohmann/json>
 - Eigen: a powerful mathematical matrix library for C++
-    <eigen.tuxfamily.org/dox/>
+    <eigen.tuxfamily.org/dox>
 ### the following libraries will be implemented later in the future
 - postgreSQL libpq: an API for connecting and sending querys to a postgre database
 
