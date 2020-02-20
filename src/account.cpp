@@ -19,7 +19,7 @@ tdma::account::~account()
 {
 }
 
-void tdma::account::get()
+const nlohmann::json tdma::account::get()
 {
     std::string url = "https://api.tdameritrade.com/v1/accounts/";
     url += m_account_id;
@@ -29,13 +29,14 @@ void tdma::account::get()
     unique_slist headers;
     headers.append(p_auth->auth_header());
 
-    unique_curl::setopt(CURLOPT_URL, url.c_str());
-    unique_curl::setopt(CURLOPT_HTTPHEADER, headers.list()); 
-    unique_curl::setopt(CURLOPT_CUSTOMREQUEST, "GET");
+    curl_connection::setopt(CURLOPT_URL, url.c_str());
+    curl_connection::setopt(CURLOPT_HTTPHEADER, headers.list()); 
+    curl_connection::setopt(CURLOPT_CUSTOMREQUEST, "GET");
 
-    unique_curl::perform();
+    curl_connection::perform();
 
-    m_data = unique_curl::data();
+    nlohmann::json m_data = nlohmann::json::parse(curl_connection::data());
+    return m_data;
 }
 
 

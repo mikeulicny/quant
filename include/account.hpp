@@ -18,10 +18,7 @@ class account : private unique_curl
         ~account();
 
         // sends a curl request to retreive account details
-        void get();
-
-        // returns the account details as a string
-        const std::string &data() const { return m_data; }
+        const nlohmann::json get();
 
     private:
         std::string m_account_id;
@@ -30,7 +27,6 @@ class account : private unique_curl
         bool m_orders;
 
         auth *p_auth;
-        std::string m_data;
 
 }; // account class
 
