@@ -2,9 +2,6 @@
 ___
 
 ### Future Implementations
-
-___
-
 #### TD Ameritrade API
 - Handling orders and saved orders
 - Instruments
