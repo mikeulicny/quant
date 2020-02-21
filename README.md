@@ -51,8 +51,8 @@ A json library with a clean API.
 
 #### Eigen Library
 A powerful c++ matrix and mathematics library
-<https://eigen.tuxfamily.org/index.php?title=Main_Page>
-    
+<http://eigen.tuxfamily.org/>
+
 #### PostgreSQL
 SQL database that provides many powerful tools
 <https://www.postgresql.org>
