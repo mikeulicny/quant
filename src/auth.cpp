@@ -5,6 +5,11 @@ tdma::auth::auth()
     read_from_file();    
 }
 
+tdma::auth::auth(const std::string &file_name)
+{
+    read_from_file(file_name);
+}
+
 tdma::auth::~auth()
 {
     write_to_file();
@@ -54,7 +59,7 @@ void tdma::auth::read_from_file(const std::string &file_name)
     long integral_access_timepoint;
     long integral_refresh_timepoint;
 
-    std::ifstream file("src/credentials.json");
+    std::ifstream file(file_name);
     nlohmann::json temp_json;
     file >> temp_json;
     m_client_id = temp_json["client_id"].get<std::string>();
