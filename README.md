@@ -21,6 +21,7 @@ client ID and url encoded refresh token as shown
 '''
 
 All C++ api is namespaced by tdma
+
 Instantiate an auth object, passing the json file name of where the credentials were previously
 stored. Then call auth.post() to request a new access token. Calling auth.post(true) will request
 a new refresh and access token.
