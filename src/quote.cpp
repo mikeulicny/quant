@@ -15,6 +15,8 @@ tdma::quote::~quote()
 
 const nlohmann::json tdma::quote::get()
 {
+    curl_connection::reset();
+
     std::string url = "https://api.tdameritrade.com/v1/marketdata/quotes";
     url += "?symbol=";
     for (std::vector<std::string>::const_iterator v_iter = m_symbols.begin(); v_iter != m_symbols.end(); ++v_iter)

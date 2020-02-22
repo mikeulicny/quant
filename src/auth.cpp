@@ -13,6 +13,8 @@ tdma::auth::~auth()
 
 void tdma::auth::post(const bool &get_refresh)
 {
+    curl_connection::reset();
+
     std::string post_data = "access_type=";
     if (get_refresh)
     {
@@ -32,8 +34,7 @@ void tdma::auth::post(const bool &get_refresh)
 
     curl_connection::perform();
   
-    nlohmann::json temp_json;
-    temp_json = nlohmann::json::parse(curl_connection::data());
+    nlohmann::json temp_json = nlohmann::json::parse(curl_connection::data());
    
     // TODO: create time class to handle verbose chrono library
     m_access_token = temp_json["access_token"].get<std::string>();

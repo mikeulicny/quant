@@ -36,6 +36,8 @@ tdma::price_history::~price_history()
 
 const nlohmann::json tdma::price_history::get()
 {
+    curl_connection::reset();
+
     std::string url = "https://api.tdameritrade.com/v1/marketdata/";
     url += m_symbol;
     url += "/pricehistory";

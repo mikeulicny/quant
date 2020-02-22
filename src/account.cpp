@@ -6,13 +6,6 @@ tdma::account::account(auth &auth_ref, const std::string &account_id, const bool
     m_positions(positions),
     m_orders(orders)
 {
-    if (positions && orders)
-        m_account_fields.append("fields", "positions%2Corders");
-    else if (positions && !orders)
-        m_account_fields.append("fields", "positions");
-    else if (!positions && orders)
-        m_account_fields.append("fields", "orders");
-
 }
 
 tdma::account::~account()
@@ -21,10 +14,16 @@ tdma::account::~account()
 
 const nlohmann::json tdma::account::get()
 {
+    curl_connection::reset();
+
     std::string url = "https://api.tdameritrade.com/v1/accounts/";
     url += m_account_id;
-    if (m_positions || m_orders)
-        url += "?" + m_account_fields.data();
+    if (m_positions && m_orders)
+        url += "?fields=positions%2Corders";
+    else if (m_positions && !m_orders)
+        url += "?fields=positions";
+    else if (m_orders && !m_positions)
+        url += "?fields=orders";
 
     unique_slist headers;
     headers.append(p_auth->auth_header());
