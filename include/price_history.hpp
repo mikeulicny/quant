@@ -28,6 +28,8 @@ class price_history : private curl_connection
         // sends a curl request to obtain price history
         const nlohmann::json get();
 
+        void set_symbol(const std::string &symbol) { m_symbol = util::to_upper(symbol); }
+
         // set or change the timeframe using periods and frequency
         void set_timeframe(int period, const std::string &period_type, int frequency, const std::string &frequency_type);
 
@@ -36,12 +38,7 @@ class price_history : private curl_connection
 
     private:
         auth *p_auth;
-
-        const std::string m_symbol;
-
-        std::string m_query;
-
-        // use in future?
+        std::string m_symbol;
         int m_period;
         std::string m_period_type;
         int m_frequency;

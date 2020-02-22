@@ -12,10 +12,6 @@ tdma::price_history::price_history(auth &auth_ref, const std::string &symbol, in
     m_frequency(frequency),
     m_frequency_type(frequency_type)
 {
-    m_query  = "period=" + std::to_string(period);
-    m_query += "&periodType=" + period_type;
-    m_query += "&frequency=" + std::to_string(frequency);
-    m_query += "&frequencyType=" + frequency_type;
 }
 
 tdma::price_history::price_history(auth &auth_ref, const std::string &symbol, long long start_timepoint, long long end_timepoint,
@@ -24,10 +20,6 @@ tdma::price_history::price_history(auth &auth_ref, const std::string &symbol, lo
     m_start_timepoint(start_timepoint),
     m_end_timepoint(end_timepoint)
 {
-    m_query  = "endDate=" + std::to_string(end_timepoint);
-    m_query += "&startDate=" + std::to_string(start_timepoint);
-    m_query += "&frequency=" + std::to_string(frequency);
-    m_query += "&frequencyType=" + frequency_type;
 }
 
 tdma::price_history::~price_history()
@@ -40,8 +32,24 @@ const nlohmann::json tdma::price_history::get()
 
     std::string url = "https://api.tdameritrade.com/v1/marketdata/";
     url += m_symbol;
-    url += "/pricehistory";
-    url += "?" + m_query;
+    url += "/pricehistory?";
+    if (m_period != 0)    // use period, if it is 0 use start & end timestamps
+    {
+        url += "period=" + std::to_string(period);
+        url += "&periodType=" + period_type;
+        url += "&frequency=" + std::to_string(frequency);
+        url += "&frequencyType=" + frequency_type;
+    }
+    else if (m_period == 0)
+    {
+        url += "endDate=" + std::to_string(m_end_timepoint);
+        url += "&startDate=" + std::to_string(m_start_timepoint);
+        url += "&frequency=" + std::to_string(frequency);
+        url += "&frequencyType=" + frequency_type;
+    }
+
+    if (!m_extended_hours)
+        url += "&needExtendedHoursData=false";
 
     tdma::unique_slist headers;
     headers.append(p_auth->auth_header());
@@ -55,18 +63,6 @@ const nlohmann::json tdma::price_history::get()
     nlohmann::json m_data = nlohmann::json::parse(curl_connection::data());
     return m_data;
 
-    /*  will be used elsewhere  
-    m_dataframe.resize(26,6);
-    for (auto &iter : json_data["candles"].items())
-    {   
-        m_dataframe(r,0) = iter.value()["datetime"];
-        m_dataframe(r,1) = iter.value()["open"];
-        m_dataframe(r,2) = iter.value()["high"];
-        m_dataframe(r,3) = iter.value()["low"];
-        m_dataframe(r,4) = iter.value()["close"];
-        m_dataframe(r,5) = iter.value()["volume"];
-    }
-    */
 }
 
 void tdma::price_history::set_timeframe(int period, const std::string &period_type, int frequency, const std::string &frequency_type)
@@ -77,35 +73,24 @@ void tdma::price_history::set_timeframe(int period, const std::string &period_ty
      *          year: 1*, 2, 3, 5, 10, 15, 20
      *          ytd: 1*
      */
-    m_query  = "period=" + std::to_string(period);
-    m_query += "&periodType=" + period_type;
-    m_query += "&frequency=" + std::to_string(frequency);
-    m_query += "&frequencyType=" + frequency_type;
-    
-    /*
-    m_timeframe.clear();
-    m_timeframe.append("period", std::to_string(period));
-    m_timeframe.append("periodType", period_type);
-    m_timeframe.append("frequency", std::to_string(frequency));
-    m_timeframe.append("frequencyType", frequency_type);
-    */ 
+    if (period == 0)    // prevent user from setting period to 0, if set to 0 get request will use start & end timestamps
+        m_period = 10;
+    else
+        m_period = period;
+    m_period_type = period_type;
+    m_frequency = frequency;
+    m_frequency_type = frequency_type;
 }
 
 void tdma::price_history::set_timeframe(long long start_date, long long end_date, int frequency, const std::string &frequency_type)
 {
     /* start date and end date must be passed as milliseconds since epoch
+     * period is set to 0 (an invalid value) to properly set url during request
      */
 
-    m_query  = "endDate=" + std::to_string(end_date);
-    m_query += "&startDate=" + std::to_string(start_date);
-    m_query += "&frequency=" + std::to_string(frequency);
-    m_query += "&frequencyType=" + frequency_type;
-    
-    /* 
-    m_timeframe.clear();
-    m_timeframe.append("startDate", std::to_string(start_date));
-    m_timeframe.append("endDate", std::to_string(end_date));
-    m_timeframe.append("frequency", std::to_string(frequency));
-    m_timeframe.append("frequencyType", frequency_type);
-    */
+    m_period = 0;       // if period is set to 0, get request will use start & end timestamps
+    m_start_timepoint = start_date;
+    m_end_timepoint = end_date;
+    m_frequency = frequency;
+    m_frequency_type = frequency_type;
 }
