@@ -16,7 +16,7 @@ client ID and url encoded refresh token as shown
 ```json
 {
     "client_id": 1234567890,
-    "refresh_token": "url_encoded_refresh_token"
+    "refresh_token": "url encoded refresh token"
 }
 ```
 
@@ -29,7 +29,7 @@ auth.check() should be used in programs as it checks whether the current timepoi
 access token expiry timepoint, and only requests a new auth token if the previous one is expired.
  
 
-```C++`
+```cpp
 int main()
 {
     tdma::auth user_auth("credentials/default.json");
@@ -55,7 +55,7 @@ unless the '''write_to_file("filename.json")''' member function is called or the
 
 All API objects need to be instantiated by passing an auth object and the required parameters
 
-```C++
+```cpp
 int main()
 {
     // create an auth object
