@@ -13,7 +13,7 @@ The user must have an app created through the TD Ameritrade developer website
 and followed the steps to obtain a refresh token. Then create a json file containing the
 client ID and url encoded refresh token as shown
 
-'''json
+'''
 {
     "client_id": <10 digit client id>,
     "refresh_token": <url encoded refresh token>
