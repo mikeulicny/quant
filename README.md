@@ -20,8 +20,6 @@ client ID and url encoded refresh token as shown
 }
 ```
 
-All C++ api is namespaced by tdma
-
 Instantiate an auth object, passing the json file name of where the credentials were previously
 stored. Then call auth.post() to request a new access token. Calling auth.post(true) will request
 a new refresh and access token.
@@ -48,7 +46,7 @@ int main()
 ```
 
 Note: access tokens expires every 30 minutes and refresh tokens expires every 90 days.
-If a refresh token expires it must be re-obtained manually through the TD Ameritrade developer website.
+If a refresh token expires it must be re-obtained manually through the [TD Ameritrade developer website](https://developer.tdameritrade.com/content/phase-1-authentication-update-xml-based-api)
 
 The auth object keeps the access and refersh tokens in memory and does not write them to a file
 unless the '''write_to_file("filename.json")''' member function is called or the object exits the scope.
