@@ -5,4 +5,4 @@
 .vscode/ipch/
 
 # ignore token file
-src/credentials.json
+credentials/default.json
