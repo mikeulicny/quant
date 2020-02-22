@@ -2,7 +2,7 @@
 ___
 
 ### goals of this program
-Provide an API that integrates with TD Ameritrade's API and a database in order to backtest custom
+Provide a low level API that integrates with TD Ameritrade's API and a database in order to backtest custom
 quantitative analysis and implement it to automate trading on a TD Ameritrade account.
 
 ___
@@ -16,7 +16,7 @@ client ID and url encoded refresh token as shown
 ```json
 {
     "client_id": 1234567890,
-    "refresh_token": url_encoded_refresh_token
+    "refresh_token": "url_encoded_refresh_token"
 }
 ```
 
@@ -29,7 +29,7 @@ auth.check() should be used in programs as it checks whether the current timepoi
 access token expiry timepoint, and only requests a new auth token if the previous one is expired.
  
 
-```cpp
+```C++`
 int main()
 {
     tdma::auth user_auth("credentials/default.json");
@@ -44,7 +44,6 @@ int main()
     user_auth.check();
 
     return 0;
-    
 }
 ```
 
@@ -56,7 +55,7 @@ unless the '''write_to_file("filename.json")''' member function is called or the
 
 All API objects need to be instantiated by passing an auth object and the required parameters
 
-```cpp
+```C++
 int main()
 {
     // create an auth object
