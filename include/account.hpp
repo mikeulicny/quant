@@ -6,7 +6,6 @@
 #include "curl_connection.hpp"
 #include "unique_slist.hpp"
 #include "auth.hpp"
-#include "query.hpp"
 
 namespace tdma
 {
@@ -26,7 +25,6 @@ class account : private unique_curl
 
     private:
         std::string m_account_id;
-        query m_account_fields;
         bool m_positions;
         bool m_orders;
 
