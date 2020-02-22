@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-    tdma::auth user_auth;
+    tdma::auth user_auth("credentials/default.json");
 
     if (argc >= 3)
     {

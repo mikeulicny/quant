@@ -33,8 +33,9 @@ void tdma::auth::post(const bool &get_refresh)
     curl_connection::setopt(CURLOPT_CUSTOMREQUEST, "POST");
 
     curl_connection::perform();
-  
-    nlohmann::json temp_json = nlohmann::json::parse(curl_connection::data());
+ 
+    nlohmann::json temp_json;
+    temp_json = nlohmann::json::parse(curl_connection::data());
    
     // TODO: create time class to handle verbose chrono library
     m_access_token = temp_json["access_token"].get<std::string>();
@@ -55,7 +56,7 @@ void tdma::auth::read_from_file(const std::string &file_name)
     long integral_access_timepoint;
     long integral_refresh_timepoint;
 
-    std::ifstream file("src/credentials.json");
+    std::ifstream file(file_name);
     nlohmann::json temp_json;
     file >> temp_json;
     m_client_id = temp_json["client_id"].get<std::string>();
