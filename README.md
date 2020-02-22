@@ -15,8 +15,8 @@ client ID and url encoded refresh token as shown
 
 ```json
 {
-    "client_id": <10 digit client id>,
-    "refresh_token": <url encoded refresh token>
+    "client_id": 1234567890,
+    "refresh_token": url encoded refresh token
 }
 ```
 
