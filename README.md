@@ -13,7 +13,7 @@ The user must have an app created through the TD Ameritrade developer website
 and followed the steps to obtain a refresh token. Then create a json file containing the
 client ID and url encoded refresh token as shown
 
-```
+```json
 {
     "client_id": <10 digit client id>,
     "refresh_token": <url encoded refresh token>
@@ -29,7 +29,7 @@ auth.check() should be used in programs as it checks whether the current timepoi
 access token expiry timepoint, and only requests a new auth token if the previous one is expired.
  
 
-```
+```cpp
 int main()
 {
     tdma::auth user_auth("credentials/default.json");
@@ -56,7 +56,7 @@ unless the '''write_to_file("filename.json")''' member function is called or the
 
 All API objects need to be instantiated by passing an auth object and the required parameters
 
-```
+```cpp
 int main()
 {
     // create an auth object
