@@ -49,7 +49,7 @@ Note: access tokens expires every 30 minutes and refresh tokens expires every 90
 If a refresh token expires it must be re-obtained manually through the [TD Ameritrade developer website](https://developer.tdameritrade.com/content/phase-1-authentication-update-xml-based-api)
 
 The auth object keeps the access and refersh tokens in memory and does not write them to a file
-unless the '''write_to_file("filename.json")''' member function is called or the object exits the scope.
+unless the ```write_to_file("filename.json")``` member function is called or the object exits the scope.
 
 All API objects need to be instantiated by passing an auth object and the required parameters
 It is dependant on the user to call an auth check 30 minutes before any requests
