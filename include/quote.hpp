@@ -12,7 +12,7 @@
 namespace tdma
 {
 
-class quote : private  curl_connection
+class quote : private curl_connection
 {
     public:
 
@@ -32,9 +32,10 @@ class quote : private  curl_connection
         void clear_symbols();
 
     private:
+
+        auth *p_auth;
         std::vector<std::string> m_symbols;
         
-        auth *p_auth;
 };// quote class
 
 } // tdma namespace

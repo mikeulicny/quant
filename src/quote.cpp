@@ -33,6 +33,7 @@ const nlohmann::json tdma::quote::get()
     curl_connection::perform();
 
     nlohmann::json m_data = nlohmann::json::parse(curl_connection::data());
+    return m_data;
 };
 
 void tdma::quote::add_symbol(const std::string &symbol)
