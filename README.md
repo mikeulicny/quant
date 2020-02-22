@@ -52,6 +52,7 @@ The auth object keeps the access and refersh tokens in memory and does not write
 unless the '''write_to_file("filename.json")''' member function is called or the object exits the scope.
 
 All API objects need to be instantiated by passing an auth object and the required parameters
+It is dependant on the user to call an auth check 30 minutes before any requests
 
 ```cpp
 int main()
@@ -61,11 +62,18 @@ int main()
 
     // create an account object
     tdma::account linked_account(user_auth, "accountID", 0, 0);
-   
-    nlohmann::json response;
-    response = linked_account.get();    // get calls an API request and returns a json object
+    
+    // create a quote object
+    tdma::quote NVDA_quote(user_auth, "NVDA");
 
-    std::cout << std::setw(4) << response << std::endl; // pretty print the json object to terminal
+    // auth check before any request calls to TD Ameritrade
+    user_auth.check();
+
+    nlohmann::json account_response = linked_account.get();    // get calls an API request and returns a json object
+    nlohmann::json quote_response = NVDA_quote.get();
+
+    std::cout << std::setw(4) << account_response << std::endl; // pretty print the json object to terminal
+    std::cout << std::setw(4) << quote_response << std::endl;
 
     return 0;
 }
