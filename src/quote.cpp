@@ -4,6 +4,11 @@ tdma::quote::quote(auth &auth_ref) : p_auth(&auth_ref)
 {
 }
 
+tdma::quote::quote(auth &auth_ref, const std::string &symbol) : p_auth(&auth_ref)
+{
+    m_symbols.push_back(util::to_upper(symbol));
+}
+
 tdma::quote::~quote()
 {
 }
@@ -32,7 +37,7 @@ const nlohmann::json tdma::quote::get()
 
 void tdma::quote::add_symbol(const std::string &symbol)
 {
-    m_symbols.push_back(symbol);
+    m_symbols.push_back(util::to_upper(symbol));
 }
 
 void tdma::quote::clear_symbols()
