@@ -1,23 +1,18 @@
 #include "../include/auth.hpp"
 
-tdma::auth::auth()
-{
-    read_from_file();    
-}
 
-tdma::auth::auth(const std::string &file_name)
+tdma::auth::auth(const std::string &file_name) : m_file(file_name)
 {
-    read_from_file(file_name);
+    read_from_file(m_file);
 }
 
 tdma::auth::~auth()
 {
-    write_to_file();
+    write_to_file(m_file);
 }
 
 void tdma::auth::post(const bool &get_refresh)
 {
-   
     std::string post_data = "access_type=";
     if (get_refresh)
     {
@@ -59,14 +54,14 @@ void tdma::auth::read_from_file(const std::string &file_name)
     long integral_access_timepoint;
     long integral_refresh_timepoint;
 
-    std::ifstream file(file_name);
+    std::ifstream file("src/credentials.json");
     nlohmann::json temp_json;
     file >> temp_json;
     m_client_id = temp_json["client_id"].get<std::string>();
-    m_access_token = temp_json["access_token"].get<std::string>();
+    m_access_token = temp_json.value("access_token", "");
     m_refresh_token = temp_json["refresh_token"].get<std::string>();
-    integral_access_timepoint = temp_json["access_expires_at"].get<long>();
-    integral_refresh_timepoint = temp_json["refresh_expires_at"].get<long>();
+    integral_access_timepoint = temp_json.value("access_expires_at", 0);
+    integral_refresh_timepoint = temp_json.value("refresh_expires_at", 0);
 
     // convert integrals to time point
     std::chrono::duration<long> access_dur(integral_access_timepoint);

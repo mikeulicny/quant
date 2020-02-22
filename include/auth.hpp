@@ -16,14 +16,15 @@ namespace tdma
 class auth : private curl_connection
 {
     public:
-        auth();
+        auth(const std::string &file_name);
+
         ~auth();
         
         void post(const bool &get_refresh = false);
 
-        void read_from_file(const std::string &file_name = "src/credentials.json");
+        void read_from_file(const std::string &file_name);
 
-        void write_to_file(const std::string &file_name = "src/credentials.json");
+        void write_to_file(const std::string &file_name);
 
         void check();
 
@@ -36,6 +37,8 @@ class auth : private curl_connection
         const std::string &auth_header() const { return m_auth_header; }
 
     private:
+
+        const std::string m_file;
 
         std::string m_client_id;
         std::string m_access_token;
