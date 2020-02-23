@@ -26,6 +26,10 @@ class curl_connection
 
         void reset();
         
+        void add_header(const std::string &str);
+
+        void clear_headers();
+
         void perform();
         
         const std::string &data() const { return write_buffer; }
@@ -39,6 +43,9 @@ class curl_connection
         }curl_environment;
 
         CURL *curl_handle;
+
+        struct curl_slist *header_slist;
+
         std::string write_buffer;
         static size_t write_callback(void *contents, size_t size, size_t nmemb, void *userp);
 
