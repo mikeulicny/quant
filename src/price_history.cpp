@@ -51,18 +51,14 @@ const nlohmann::json tdma::price_history::get()
     if (!m_extended_hours)
         url += "&needExtendedHoursData=false";
 
-    tdma::unique_slist headers;
-    headers.append(p_auth->auth_header());
-
+    curl_connection::add_header(p_auth->auth_header());
     curl_connection::setopt(CURLOPT_URL, url.c_str());
-    curl_connection::setopt(CURLOPT_HTTPHEADER, headers.list());
     curl_connection::setopt(CURLOPT_CUSTOMREQUEST, "GET");
 
     curl_connection::perform();
 
     nlohmann::json m_data = nlohmann::json::parse(curl_connection::data());
     return m_data;
-
 }
 
 void tdma::price_history::set_timeframe(int period, const std::string &period_type, int frequency, const std::string &frequency_type)

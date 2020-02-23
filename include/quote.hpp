@@ -7,7 +7,6 @@
 #include "auth.hpp"
 #include "curl_connection.hpp"
 #include "util.hpp"
-#include "unique_slist.hpp"
 
 namespace tdma
 {
