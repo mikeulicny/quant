@@ -35,17 +35,17 @@ const nlohmann::json tdma::price_history::get()
     url += "/pricehistory?";
     if (m_period != 0)    // use period, if it is 0 use start & end timestamps
     {
-        url += "period=" + std::to_string(period);
-        url += "&periodType=" + period_type;
-        url += "&frequency=" + std::to_string(frequency);
-        url += "&frequencyType=" + frequency_type;
+        url += "period=" + std::to_string(m_period);
+        url += "&periodType=" + m_period_type;
+        url += "&frequency=" + std::to_string(m_frequency);
+        url += "&frequencyType=" + m_frequency_type;
     }
     else if (m_period == 0)
     {
         url += "endDate=" + std::to_string(m_end_timepoint);
         url += "&startDate=" + std::to_string(m_start_timepoint);
-        url += "&frequency=" + std::to_string(frequency);
-        url += "&frequencyType=" + frequency_type;
+        url += "&frequency=" + std::to_string(m_frequency);
+        url += "&frequencyType=" + m_frequency_type;
     }
 
     if (!m_extended_hours)
