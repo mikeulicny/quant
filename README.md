@@ -1,9 +1,7 @@
 # quant trading system written in c++
-___
 
-### goals of this program
-Provide a low level API that integrates with TD Ameritrade's API and a database in order to backtest custom
-quantitative analysis and implement it to automate trading on a TD Ameritrade account.
+A brokerage environment that is directly connected through TD Ameritrades API allowing fast trading
+scripts written in C++
 
 ___
 
