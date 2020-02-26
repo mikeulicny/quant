@@ -20,7 +20,7 @@ class auth : private curl_connection
 
         ~auth();
         
-        void post(const bool &get_refresh = false);
+        void post(bool get_refresh = false);
 
         void read_from_file(const std::string &file_name);
 

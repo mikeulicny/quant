@@ -11,7 +11,7 @@ tdma::auth::~auth()
     write_to_file(m_file);
 }
 
-void tdma::auth::post(const bool &get_refresh)
+void tdma::auth::post(bool get_refresh)
 {
     curl_connection::reset();
 
