@@ -26,7 +26,7 @@ class auth : private curl_connection
 
         void write_to_file(const std::string &file_name);
 
-        void check();
+        void verify();
 
         const std::string &client_id() const { return m_client_id; }
         

@@ -89,7 +89,7 @@ void tdma::auth::write_to_file(const std::string &file_name)
     file << std::setw(4) << temp_json << std::endl;
 }
 
-void tdma::auth::check()
+void tdma::auth::verify()
 {
     if (access_expires_at < std::chrono::system_clock::now())
     {
