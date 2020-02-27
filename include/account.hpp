@@ -13,7 +13,7 @@ class account : private curl_connection
 {
     public:
 
-        account(auth &auth_ref, const std::string &account_id, const bool positions, const bool orders);
+        account(auth &auth_ref, const std::string &account_id, bool positions, bool orders);
         
         ~account();
 
