@@ -1,5 +1,5 @@
 #pragma once
-
+#include <iostream>
 #include <string>
 #include <nlohmann/json.hpp>
 
@@ -13,13 +13,13 @@ class account : private curl_connection
 {
     public:
 
-        account(auth &auth_ref, const std::string &account_id, bool positions, bool orders);
+        account(auth &auth_ref, const std::string &account_id, const bool positions, const bool orders);
         
         ~account();
 
-        void set_position(bool position_flag) { m_positions = position_flag; }
+        void set_position(const bool position_flag) { m_positions = position_flag; }
 
-        void set_order(bool order_flag) { m_orders = order_flag; }
+        void set_order(const bool order_flag) { m_orders = order_flag; }
 
         // sends a curl request to retreive account details
         const nlohmann::json get();

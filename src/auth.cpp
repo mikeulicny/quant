@@ -13,8 +13,6 @@ tdma::auth::~auth()
 
 void tdma::auth::post(bool get_refresh)
 {
-    curl_connection::reset();
-
     std::string post_data = "access_type=";
     if (get_refresh)
     {
@@ -26,17 +24,19 @@ void tdma::auth::post(bool get_refresh)
     post_data += "&refresh_token=";
     post_data += m_refresh_token;
 
-    // request new codes
-    curl_connection::setopt(CURLOPT_URL, "https://api.tdameritrade.com/v1/oauth2/token");
+    // set curl options
+    curl_connection::url_set(CURLUPART_URL, "https://api.tdameritrade.com/v1/oauth2/token");
     curl_connection::setopt(CURLOPT_POSTFIELDS, post_data.c_str());
     curl_connection::setopt(CURLOPT_POSTFIELDSIZE, (long)std::strlen(post_data.c_str()));
     curl_connection::setopt(CURLOPT_CUSTOMREQUEST, "POST");
 
     curl_connection::perform();
- 
+
     nlohmann::json temp_json;
     temp_json = nlohmann::json::parse(curl_connection::data());
-   
+
+    curl_connection::reset();
+
     // TODO: create time class to handle verbose chrono library
     m_access_token = temp_json["access_token"].get<std::string>();
     access_expires_at = std::chrono::time_point_cast<std::chrono::seconds>(std::chrono::system_clock::now() + std::chrono::seconds(1800));

@@ -6,6 +6,7 @@ tdma::account::account(auth &auth_ref, const std::string &account_id, const bool
     m_positions(positions),
     m_orders(orders)
 {
+    curl_connection::url_set(CURLUPART_URL, "https://api.tdameritrade.com/v1/accounts/" + m_account_id);
 }
 
 tdma::account::~account()
@@ -14,24 +15,23 @@ tdma::account::~account()
 
 const nlohmann::json tdma::account::get()
 {
-    curl_connection::reset();
 
-    std::string url = "https://api.tdameritrade.com/v1/accounts/";
-    url += m_account_id;
     if (m_positions && m_orders)
-        url += "?fields=positions%2Corders";
+        curl_connection::url_set(CURLUPART_QUERY, "fields=positions%2Corders"); // %2C = ,
     else if (m_positions && !m_orders)
-        url += "?fields=positions";
+        curl_connection::url_set(CURLUPART_QUERY, "fields=positions");
     else if (m_orders && !m_positions)
-        url += "?fields=orders";
+        curl_connection::url_set(CURLUPART_QUERY, "fields=orders");
 
     curl_connection::add_header(p_auth->auth_header());
-    curl_connection::setopt(CURLOPT_URL, url.c_str());
     curl_connection::setopt(CURLOPT_CUSTOMREQUEST, "GET");
 
     curl_connection::perform();
 
     nlohmann::json m_data = nlohmann::json::parse(curl_connection::data());
+
+    curl_connection::reset();
+
     return m_data;
 }
 

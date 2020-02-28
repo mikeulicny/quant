@@ -13,6 +13,9 @@
 namespace tdma
 {
 
+// global tdma variables
+const std::string TDMA_URL_BASE = "https://api.tdameritrade.com/";
+
 class auth : private curl_connection
 {
     public:

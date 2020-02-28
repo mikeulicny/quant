@@ -12,10 +12,11 @@ class curl_connection
         curl_connection();
 
         virtual ~curl_connection();
-       
-        // raii class requirements
+      
+        // remove copy constructor - RAII
         curl_connection(const curl_connection&) = delete;
 
+        // remove assignment operator - RAII
         curl_connection &operator=(const curl_connection&) = delete;
 
         template<typename T>
@@ -30,6 +31,16 @@ class curl_connection
 
         void clear_headers();
 
+        void url_set(const CURLUPart &part, const std::string &parameter, unsigned int flag = 0);
+        
+        /* url get function is not required at this time
+        void url_get(const CURLUpart &part, unsigned int flag)
+        {
+            // std::string str = curl_url_get();
+            // return str
+        }
+        */
+
         void perform();
         
         const std::string &data() const { return write_buffer; }
@@ -43,7 +54,7 @@ class curl_connection
         }curl_environment;
 
         CURL *curl_handle;
-
+        CURLU *url_handle;
         struct curl_slist *header_slist;
 
         std::string write_buffer;
