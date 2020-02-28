@@ -22,6 +22,8 @@ const nlohmann::json tdma::account::get()
         curl_connection::url_set(CURLUPART_QUERY, "fields=positions");
     else if (m_orders && !m_positions)
         curl_connection::url_set(CURLUPART_QUERY, "fields=orders");
+    else
+        curl_connection::url_set(CURLUPART_QUERY, NULL);
 
     curl_connection::add_header(p_auth->auth_header());
     curl_connection::setopt(CURLOPT_CUSTOMREQUEST, "GET");
