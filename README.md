@@ -21,7 +21,7 @@ client ID and url encoded refresh token and place it in the credentials folder
 Instantiate an auth object, passing the json file name of where the credentials were previously
 stored. Then call auth.post() to request a new access token. Calling auth.post(true) will request
 a new refresh and access token.
-auth.check() should be used in programs as it checks whether the current timepoint is past the
+auth.verify() should be used in programs as it checks whether the current timepoint is past the
 access token expiry timepoint, and only requests a new auth token if the previous one is expired.
  
 
@@ -37,7 +37,7 @@ int main()
     user_auth.post(true);
 
     // use in programs before executing API calls to TD Ameritrade
-    user_auth.check();
+    user_auth.verify();
 
     return 0;
 }
@@ -65,7 +65,7 @@ int main()
     tdma::quote NVDA_quote(user_auth, "NVDA");
 
     // auth check before any request calls to TD Ameritrade
-    user_auth.check();
+    user_auth.verify();
 
     nlohmann::json account_response = linked_account.get();    // get calls an API request and returns a json object
     nlohmann::json quote_response = NVDA_quote.get();
@@ -81,7 +81,7 @@ This is the general API design style and is subject to change as progress is mad
 
 ### Future Implementations
 #### TD Ameritrade API
-- Handling orders and saved orders
+- Handling orders and saved orders (in progress)
 - Instruments
 - Market hours
 - Movers
