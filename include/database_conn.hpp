@@ -1,7 +1,8 @@
-#pragma once
+#ifndef TDMA_DATABASE_CONN_H
+#define TDMA_DATABASE_CONN_H
 
 #include <string>
-#include "libpq-fe.h"
+#include <libpq-fe.h>
 
 namespace tdma
 {
@@ -33,3 +34,5 @@ class database_conn
 };// database_conn class
 
 } // tdma namespace
+
+#endif // TDMA_DATABASE_CONN_H
