@@ -1,10 +1,12 @@
-#pragma once
+#ifndef TDMA_ACCOUNT_H
+#define TDMA_ACCOUNT_H
+
 #include <iostream>
 #include <string>
 #include <nlohmann/json.hpp>
 
-#include "curl_connection.hpp"
-#include "auth.hpp"
+#include <curl_connection.hpp>
+#include <auth.hpp> 
 
 namespace tdma
 {
@@ -34,3 +36,5 @@ class account : private curl_connection
 }; // account class
 
 } // tdma namespace
+
+#endif // TDMA_ACCOUNT_H

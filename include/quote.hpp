@@ -1,12 +1,12 @@
-#pragma once
+#ifndef TDMA_QUOTE_H
+#define TDMA_QUOTE_H
 
 #include <string>
 #include <vector>
-//#include <initializer_list>
 
-#include "auth.hpp"
-#include "curl_connection.hpp"
-#include "util.hpp"
+#include <auth.hpp>
+#include <curl_connection.hpp>
+#include <util.hpp>
 
 namespace tdma
 {
@@ -38,3 +38,5 @@ class quote : private curl_connection
 };// quote class
 
 } // tdma namespace
+
+#endif // TDMA_QUOTE_H

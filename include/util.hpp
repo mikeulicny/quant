@@ -1,4 +1,5 @@
-#pragma once
+#ifndef UTIL_H
+#define UTIL_H
 
 #include <algorithm>
 #include <sstream>
@@ -40,3 +41,5 @@ inline std::string to_upper(std::string str)
 }
 
 } // util namespace
+
+#endif // UTIL_H

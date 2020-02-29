@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TDMA_CURL_CONNECTION_H
+#define TDMA_CURL_CONNECTION_H
 
 #include <string>
 #include <curl/curl.h>
@@ -63,3 +64,5 @@ class curl_connection
 }; // unique_curl class
 
 } // tmda namespace
+
+#endif // TDMA_CURL_CONNECTION_H

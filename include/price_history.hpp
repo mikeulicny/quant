@@ -1,12 +1,13 @@
-#pragma once
+#ifndef TDMA_PRICE_HISTORY_H
+#define TDMA_PRICE_HISTORY_H
 
 #include <iostream>
 #include <string>
 #include <nlohmann/json.hpp>
 
-#include "curl_connection.hpp"
-#include "auth.hpp"
-#include "util.hpp"
+#include <curl_connection.hpp>
+#include <auth.hpp>
+#include <util.hpp>
 
 namespace tdma
 {
@@ -70,3 +71,5 @@ class price_history : private curl_connection
 };// price_history class
 
 } // tdma namespace
+
+#endif // TDMA_PRICE_HISTORY_H

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TDMA_AUTH_H
+#define TDMA_AUTH_H
 
 #include <chrono>
 #include <string>
@@ -7,8 +8,8 @@
 #include <iomanip>
 #include <fstream>
 
-#include "curl_connection.hpp"
-#include "util.hpp"
+#include <curl_connection.hpp>
+#include <util.hpp>
 
 namespace tdma
 {
@@ -54,3 +55,5 @@ class auth : private curl_connection
 };// auth class
 
 }// tdma namespace
+
+#endif // TDMA_AUTH_H
