@@ -8,8 +8,8 @@
 #include <iomanip>
 #include <fstream>
 
-#include <curl_connection.hpp>
-#include <util.hpp>
+#include "curl_connection.hpp"
+#include "util.hpp"
 
 namespace tdma
 {

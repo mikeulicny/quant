@@ -5,9 +5,9 @@
 #include <string>
 #include <nlohmann/json.hpp>
 
-#include <curl_connection.hpp>
-#include <auth.hpp>
-#include <util.hpp>
+#include "curl_connection.hpp"
+#include "auth.hpp"
+#include "util.hpp"
 
 // TODO: implement finance namespace for constexpr variables
 

@@ -4,9 +4,9 @@
 #include <string>
 #include <vector>
 
-#include <auth.hpp>
-#include <curl_connection.hpp>
-#include <util.hpp>
+#include "auth.hpp"
+#include "curl_connection.hpp"
+#include "util.hpp"
 
 namespace tdma
 {

@@ -5,8 +5,8 @@
 #include <string>
 #include <nlohmann/json.hpp>
 
-#include <curl_connection.hpp>
-#include <auth.hpp> 
+#include "curl_connection.hpp"
+#include "auth.hpp" 
 
 namespace tdma
 {

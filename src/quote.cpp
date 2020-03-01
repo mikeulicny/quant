@@ -1,4 +1,4 @@
-#include "../include/quote.hpp"
+#include "quote.hpp" 
 
 tdma::quote::quote(auth &auth_ref) : p_auth(&auth_ref)
 {
