@@ -1,10 +1,10 @@
 #include "util.hpp"
 
 
-const std::string util::url_encode(const std::string &s)
+const std::string util::url_encode(const std::string &str)
 {
     std::ostringstream os;
-    for (std::string::const_iterator ci = s.begin(); ci != s.end(); ++ci)
+    for (std::string::const_iterator ci = str.begin(); ci != str.end(); ++ci)
     {
         if ((*ci >= 'a' && *ci <= 'z') ||
             (*ci >= 'A' && *ci <= 'Z') ||

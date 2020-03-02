@@ -11,7 +11,7 @@
 namespace util 
 {
 
-const std::string url_encode(const std::string &s);
+const std::string url_encode(const std::string &str);
 
 const std::string url_decode(const std::string &str);
 
